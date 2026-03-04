@@ -66,6 +66,8 @@ export class App {
     selectBoxValue5 = signal<string | null>(null); // Full configs (Search/Clear)
     selectBoxValue6 = signal<string | null>('eng'); // Ignore Value / Cascade
     selectBoxValue7 = signal<string | null>(null); // Select Box Key
+    selectBoxValue8 = signal<string | null>(null); // Cascading Demo
+    selectedRegionSelectBox = signal<string | null>('north'); // Parent for Select Box Cascading
 
     // Tag Box Variables
     tagBoxValue1 = signal<string[]>([]);
@@ -75,6 +77,8 @@ export class App {
     tagBoxValue5 = signal<string[]>([]); // Full configs (Max Length/Displayed)
     tagBoxValue6 = signal<string[]>(['eng']); // Ignore Value
     tagBoxValue7 = signal<string[]>([]); // Tag Box Key
+    tagBoxValue8 = signal<string[]>([]); // Cascading Demo
+    selectedRegionTagBox = signal<string | null>('north'); // Parent for Tag Box Cascading
 
     // Date Box Variables
     dateBoxValue1 = signal<string | null>(null);
@@ -99,8 +103,10 @@ export class App {
     checkBoxGroupValue4 = signal<string[]>([]);
     checkBoxGroupValue5 = signal<string[]>([]); // Full configs (Vertical/Search)
     checkBoxGroupValue6 = signal<string[]>(['fin']); // Ignore values
-    checkBoxGroupValue7 = signal<string[]>([]); // Single Select
-    checkBoxGroupValue8 = signal<string[]>([]); // Cascading Demo
+    checkBoxGroupValue7 = signal<string[]>([]); // Single Select (customDataSource)
+    checkBoxGroupValue8 = signal<string[]>([]); // CheckBox Key (multiple)
+    checkBoxGroupValue9 = signal<string[]>([]); // CheckBox Key (single select)
+    checkBoxGroupValue10 = signal<string[]>([]); // Cascading Demo
     selectedRegion = signal<string | null>('north'); // Parent for Cascading Demo
 
     // Radio Group Variables
@@ -110,6 +116,9 @@ export class App {
     radioGroupValue4 = signal<string | null>(null);
     radioGroupValue5 = signal<string | null>(null); // Full configs (Vertical)
     radioGroupValue6 = signal<string | null>('eng'); // Ignore values / Auto Default
+    radioGroupValue7 = signal<string | null>(null); // Radio Key Demo
+    radioGroupValue8 = signal<string | null>(null); // Cascading Demo
+    selectedRegionRadio = signal<string | null>('north'); // Parent for Radio Cascading Demo
 
     // Handlers
     onSelectBoxChange(caseNum: number, event: any) {
@@ -120,6 +129,7 @@ export class App {
         if (caseNum === 5) this.selectBoxValue5.set(event.value);
         if (caseNum === 6) this.selectBoxValue6.set(event.value);
         if (caseNum === 7) this.selectBoxValue7.set(event.value);
+        if (caseNum === 8) this.selectBoxValue8.set(event.value);
     }
 
     onTagBoxChange(caseNum: number, event: any) {
@@ -130,6 +140,7 @@ export class App {
         if (caseNum === 5) this.tagBoxValue5.set(event.value);
         if (caseNum === 6) this.tagBoxValue6.set(event.value);
         if (caseNum === 7) this.tagBoxValue7.set(event.value);
+        if (caseNum === 8) this.tagBoxValue8.set(event.value);
     }
 
     onDateBoxChange(caseNum: number, event: any) {
@@ -139,6 +150,17 @@ export class App {
         if (caseNum === 4) this.dateBoxValue4.set(event.value);
         if (caseNum === 5) this.dateBoxValue5.set(event.value);
         if (caseNum === 6) this.dateBoxValue6.set(event.value);
+    }
+
+    onRadioGroupChange(caseNum: number, event: any) {
+        if (caseNum === 1) this.radioGroupValue1.set(event.value);
+        if (caseNum === 2) this.radioGroupValue2.set(event.value);
+        if (caseNum === 3) this.radioGroupValue3.set(event.value);
+        if (caseNum === 4) this.radioGroupValue4.set(event.value);
+        if (caseNum === 5) this.radioGroupValue5.set(event.value);
+        if (caseNum === 6) this.radioGroupValue6.set(event.value);
+        if (caseNum === 7) this.radioGroupValue7.set(event.value);
+        if (caseNum === 8) this.radioGroupValue8.set(event.value);
     }
 
     onNumberBoxChange(caseNum: number, event: any) {
@@ -159,18 +181,12 @@ export class App {
         if (caseNum === 6) this.checkBoxGroupValue6.set(event.value);
         if (caseNum === 7) this.checkBoxGroupValue7.set(event.value);
         if (caseNum === 8) this.checkBoxGroupValue8.set(event.value);
+        if (caseNum === 9) this.checkBoxGroupValue9.set(event.value);
+        if (caseNum === 10) this.checkBoxGroupValue10.set(event.value);
     }
 
-    onRegionChange(event: any) {
-        this.selectedRegion.set(event.value);
-    }
-
-    onRadioGroupChange(caseNum: number, event: any) {
-        if (caseNum === 1) this.radioGroupValue1.set(event.value);
-        if (caseNum === 2) this.radioGroupValue2.set(event.value);
-        if (caseNum === 3) this.radioGroupValue3.set(event.value);
-        if (caseNum === 4) this.radioGroupValue4.set(event.value);
-        if (caseNum === 5) this.radioGroupValue5.set(event.value);
-        if (caseNum === 6) this.radioGroupValue6.set(event.value);
+    onRegionChange(type: string, event: any) {
+        if (type === 'checkbox') this.selectedRegion.set(event.value);
+        if (type === 'radio') this.selectedRegionRadio.set(event.value);
     }
 }
