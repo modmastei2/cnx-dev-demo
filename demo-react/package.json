@@ -11,6 +11,13 @@
   },
   "dependencies": {
     "@cnx-dev/react-devextreme": "file:../../cnx-dev-ui/dist/packages/react-devextreme",
+    "@cnx-dev/react-mui": "file:../../cnx-dev-ui/packages/react-mui",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.7",
+    "@mui/material": "^6.4.7",
+    "@mui/x-date-pickers": "^8.3.1",
+    "date-fns": "^4.1.0",
     "devextreme": "^25.2.4",
     "devextreme-react": "^25.2.4",
     "react": "^19.2.0",

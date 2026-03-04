@@ -509,6 +509,86 @@
                     Val: <strong>{{ checkBoxGroupValue7() | json }}</strong>
                 </p>
             </div>
+            <!-- in-memory cascading -->
+            <div
+                style="
+                    grid-column: span 2;
+                    border: 1px dashed #ccc;
+                    padding: 15px;
+                    border-radius: 8px;
+                    background: #fafafa;
+                "
+            >
+                <h4
+                    style="
+                        margin: 0 0 8px 0;
+                        font-size: 14px;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    "
+                >
+                    <span
+                        style="
+                            background: #1976d2;
+                            color: white;
+                            padding: 2px 8px;
+                            border-radius: 12px;
+                            font-size: 11px;
+                        "
+                        >NEW</span
+                    >
+                    8. In-Memory Cascading (Regions -> Provinces)
+                </h4>
+                <div style="display: flex; gap: 30px; margin-top: 15px">
+                    <div style="flex: 1">
+                        <label
+                            style="
+                                font-size: 12px;
+                                font-weight: bold;
+                                color: #555;
+                                display: block;
+                                margin-bottom: 5px;
+                            "
+                            >Parent (Select Region):</label
+                        >
+                        <cnx-select-box
+                            [customDataSource]="regions"
+                            valueExpr="value"
+                            displayExpr="text"
+                            placeholder="Select region..."
+                            [value]="selectedRegion()"
+                            (onValueChanged)="onRegionChange($event)"
+                        ></cnx-select-box>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: #1976d2">
+                            Region Signal: <strong>{{ selectedRegion() | json }}</strong>
+                        </p>
+                    </div>
+                    <div style="flex: 2">
+                        <label
+                            style="
+                                font-size: 12px;
+                                font-weight: bold;
+                                color: #555;
+                                display: block;
+                                margin-bottom: 5px;
+                            "
+                            >Child (Checkbox Provinces Cascade):</label
+                        >
+                        <cnx-check-box-group
+                            [customDataSource]="provinces"
+                            valueExpr="value"
+                            displayExpr="text"
+                            [cascadeRule]="{ parentKey: 'value', childKey: 'regionId' }"
+                            [cascadeBy]="selectedRegion()"
+                            (onValueChanged)="onCheckBoxGroupChange(8, $event)"
+                        ></cnx-check-box-group>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: #e91e63">
+                            Checkboxes Signal: <strong>{{ checkBoxGroupValue8() | json }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

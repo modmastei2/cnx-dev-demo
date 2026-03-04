@@ -45,6 +45,19 @@ export class App {
 
     ignoredDepartments = ['hr', 'sales'];
 
+    // Cascading Data Sources
+    regions = [
+        { text: 'Northern Region', value: 'north', dropdownText: 'Northern Region' },
+        { text: 'Southern Region', value: 'south', dropdownText: 'Southern Region' },
+    ];
+
+    provinces = [
+        { text: 'Chiang Mai', value: 'cmi', regionId: 'north' },
+        { text: 'Chiang Rai', value: 'cri', regionId: 'north' },
+        { text: 'Phuket', value: 'pkt', regionId: 'south' },
+        { text: 'Songkhla', value: 'ska', regionId: 'south' },
+    ];
+
     // Select Box Variables
     selectBoxValue1 = signal<string | null>(null);
     selectBoxValue2 = signal<string | null>(null);
@@ -87,6 +100,8 @@ export class App {
     checkBoxGroupValue5 = signal<string[]>([]); // Full configs (Vertical/Search)
     checkBoxGroupValue6 = signal<string[]>(['fin']); // Ignore values
     checkBoxGroupValue7 = signal<string[]>([]); // Single Select
+    checkBoxGroupValue8 = signal<string[]>([]); // Cascading Demo
+    selectedRegion = signal<string | null>('north'); // Parent for Cascading Demo
 
     // Radio Group Variables
     radioGroupValue1 = signal<string | null>(null);
@@ -143,6 +158,11 @@ export class App {
         if (caseNum === 5) this.checkBoxGroupValue5.set(event.value);
         if (caseNum === 6) this.checkBoxGroupValue6.set(event.value);
         if (caseNum === 7) this.checkBoxGroupValue7.set(event.value);
+        if (caseNum === 8) this.checkBoxGroupValue8.set(event.value);
+    }
+
+    onRegionChange(event: any) {
+        this.selectedRegion.set(event.value);
     }
 
     onRadioGroupChange(caseNum: number, event: any) {

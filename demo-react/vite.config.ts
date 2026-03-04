@@ -8,6 +8,10 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
+            '@cnx-dev/react-mui': path.resolve(
+                __dirname,
+                '../../cnx-dev-ui/packages/react-mui/src/index.ts',
+            ),
             react: path.resolve(__dirname, './node_modules/react'),
             'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
         },
