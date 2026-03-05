@@ -188,7 +188,7 @@
                             [customDataSource]="provinces"
                             valueExpr="value"
                             displayExpr="text"
-                            [cascadeRule]="{ parentKey: 'value', childKey: 'regionId' }"
+                            [cascadeRule]="{ cascadeField: 'value', childKey: 'regionId' }"
                             [cascadeBy]="selectedRegionSelectBox()"
                             (onValueChanged)="onSelectBoxChange(8, $event)"
                         ></cnx-select-box>
@@ -380,7 +380,7 @@
                             [customDataSource]="provinces"
                             valueExpr="value"
                             displayExpr="text"
-                            [cascadeRule]="{ parentKey: 'value', childKey: 'regionId' }"
+                            [cascadeRule]="{ cascadeField: 'value', childKey: 'regionId' }"
                             [cascadeBy]="selectedRegionTagBox()"
                             (onValueChanged)="onTagBoxChange(8, $event)"
                         ></cnx-tag-box>
@@ -768,7 +768,7 @@
                             [customDataSource]="provinces"
                             valueExpr="value"
                             displayExpr="text"
-                            [cascadeRule]="{ parentKey: 'value', childKey: 'regionId' }"
+                            [cascadeRule]="{ cascadeField: 'value', childKey: 'regionId' }"
                             [cascadeBy]="selectedRegion()"
                             (onValueChanged)="onCheckBoxGroupChange(10, $event)"
                         ></cnx-check-box-group>
@@ -953,14 +953,16 @@
                             "
                             >Child (Checkbox Provinces Cascade):</label
                         >
+
                         <cnx-radio-group
                             [customDataSource]="provinces"
                             valueExpr="value"
                             displayExpr="text"
                             layout="vertical"
-                            [cascadeRule]="{ parentKey: 'value', childKey: 'regionId' }"
+                            [cascadeRule]="{ cascadeField: 'value', childKey: 'regionId' }"
                             [cascadeBy]="selectedRegionRadio()"
-                            (onValueChanged)="onRadioGroupChange(8, $event)"
+                            [value]="radioGroupValue8()"
+                            (onValueChanged)="xlog($event.value); onRadioGroupChange(8, $event)"
                         ></cnx-radio-group>
 
                         <p style="margin: 4px 0 0 0; font-size: 12px; color: #e91e63">

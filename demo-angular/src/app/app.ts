@@ -189,4 +189,8 @@ export class App {
         if (type === 'checkbox') this.selectedRegion.set(event.value);
         if (type === 'radio') this.selectedRegionRadio.set(event.value);
     }
+
+    xlog(event: any) {
+        console.log(event);
+    }
 }

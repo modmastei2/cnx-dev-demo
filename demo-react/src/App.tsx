@@ -35,6 +35,32 @@ const departments: CheckBoxViewModel[] = [
 
 const ignoredDepartments = ["hr", "sales"];
 
+// ─── Cascade Data ─────────────────────────────────────────────────────────────
+
+const regions = [
+    { value: "north", text: "ภาคเหนือ" },
+    { value: "central", text: "ภาคกลาง" },
+    { value: "south", text: "ภาคใต้" },
+    { value: "northeast", text: "ภาคอีสาน" },
+];
+
+const provinces = [
+    { value: "CM", text: "เชียงใหม่", regionId: "north" },
+    { value: "LM", text: "ลำปาง", regionId: "north" },
+    { value: "PRE", text: "แพร่", regionId: "north" },
+    { value: "BKK", text: "กรุงเทพฯ", regionId: "central" },
+    { value: "NPT", text: "นครปฐม", regionId: "central" },
+    { value: "AYU", text: "อยุธยา", regionId: "central" },
+    { value: "PKT", text: "ภูเก็ต", regionId: "south" },
+    { value: "SGK", text: "สงขลา", regionId: "south" },
+    { value: "KBI", text: "กระบี่", regionId: "south" },
+    { value: "KKN", text: "ขอนแก่น", regionId: "northeast" },
+    { value: "UBL", text: "อุบลฯ", regionId: "northeast" },
+    { value: "NDN", text: "นครราชสีมา", regionId: "northeast" },
+];
+
+const cascadeRule = { cascadeField: "value", childKey: "regionId" };
+
 // ─── Mock Services ────────────────────────────────────────────────────────────
 
 const mockSelectBoxService: SelectBoxDataProvider = {
@@ -149,6 +175,8 @@ function App() {
     const [sb5, setSb5] = useState<string | null>(null);
     const [sb6, setSb6] = useState<string | null>(null);
     const [sb7, setSb7] = useState<string | null>(null);
+    const [sbCascadeRegion, setSbCascadeRegion] = useState<string | null>(null);
+    const [sb8, setSb8] = useState<string | null>(null);
 
     // TagBox
     const [tb1, setTb1] = useState<string[]>([]);
@@ -157,6 +185,8 @@ function App() {
     const [tb5, setTb5] = useState<string[]>([]);
     const [tb6, setTb6] = useState<string[]>([]);
     const [tb7, setTb7] = useState<string[]>([]);
+    const [tbCascadeRegion, setTbCascadeRegion] = useState<string | null>(null);
+    const [tb8, setTb8] = useState<string[]>([]);
 
     // DateBox
     const [db1, setDb1] = useState<string | null>(null);
@@ -179,6 +209,8 @@ function App() {
     const [cb5, setCb5] = useState<string[]>([]);
     const [cb6, setCb6] = useState<string[]>([]);
     const [cb7, setCb7] = useState<string[]>([]);
+    const [cbCascadeRegion, setCbCascadeRegion] = useState<string | null>(null);
+    const [cb8, setCb8] = useState<string[]>([]);
 
     // RadioGroup
     const [rg1, setRg1] = useState<string | null>(null);
@@ -187,6 +219,8 @@ function App() {
     const [rg4, setRg4] = useState<string>("apple");
     const [rg5, setRg5] = useState<string | null>(null);
     const [rg6, setRg6] = useState<string | null>(null);
+    const [rgCascadeRegion, setRgCascadeRegion] = useState<string | null>(null);
+    const [rg7, setRg7] = useState<string | null>(null);
 
     return (
         <CnxDataProvider
@@ -317,6 +351,65 @@ function App() {
                                         onValueChanged={(e) => setSb7(e.value)}
                                     />
                                 </Field>
+
+                                {/* Cascade — full width */}
+                                <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                                    <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2">
+                                        <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">
+                                            NEW
+                                        </span>
+                                        8. In-Memory Cascading (Region →
+                                        Province)
+                                    </p>
+                                    <div className="flex gap-6">
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Parent — Select Region
+                                            </label>
+                                            <CnxSelectBox
+                                                customDataSource={regions}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                placeholder="เลือกภาค..."
+                                                value={sbCascadeRegion}
+                                                onValueChanged={(e) => {
+                                                    setSbCascadeRegion(e.value);
+                                                    setSb8(null);
+                                                }}
+                                            />
+                                            <p className="text-xs text-blue-600">
+                                                Region:{" "}
+                                                <strong>
+                                                    {JSON.stringify(
+                                                        sbCascadeRegion,
+                                                    )}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Child — Province (Cascade)
+                                            </label>
+                                            <CnxSelectBox
+                                                customDataSource={provinces}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                cascadeRule={cascadeRule}
+                                                cascadeBy={sbCascadeRegion}
+                                                value={sb8}
+                                                onValueChanged={(e) =>
+                                                    setSb8(e.value)
+                                                }
+                                            />
+                                            <p className="text-xs text-pink-600">
+                                                Province:{" "}
+                                                <strong>
+                                                    {JSON.stringify(sb8)}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </Section>
 
                             {/* ── TagBox ────────────────────────────────────────── */}
@@ -411,6 +504,65 @@ function App() {
                                         }
                                     />
                                 </Field>
+
+                                {/* Cascade — full width */}
+                                <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                                    <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2">
+                                        <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">
+                                            NEW
+                                        </span>
+                                        8. In-Memory Cascading (Region →
+                                        Provinces)
+                                    </p>
+                                    <div className="flex gap-6">
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Parent — Select Region
+                                            </label>
+                                            <CnxSelectBox
+                                                customDataSource={regions}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                placeholder="เลือกภาค..."
+                                                value={tbCascadeRegion}
+                                                onValueChanged={(e) => {
+                                                    setTbCascadeRegion(e.value);
+                                                    setTb8([]);
+                                                }}
+                                            />
+                                            <p className="text-xs text-blue-600">
+                                                Region:{" "}
+                                                <strong>
+                                                    {JSON.stringify(
+                                                        tbCascadeRegion,
+                                                    )}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Child — Provinces (Cascade)
+                                            </label>
+                                            <CnxTagBox
+                                                customDataSource={provinces}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                cascadeRule={cascadeRule}
+                                                cascadeBy={tbCascadeRegion}
+                                                value={tb8}
+                                                onValueChanged={(e) =>
+                                                    setTb8(e.value as string[])
+                                                }
+                                            />
+                                            <p className="text-xs text-pink-600">
+                                                Provinces:{" "}
+                                                <strong>
+                                                    {JSON.stringify(tb8)}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </Section>
 
                             {/* ── DateBox ───────────────────────────────────────── */}
@@ -641,6 +793,67 @@ function App() {
                                         onValueChanged={(e) => setCb7(e.value)}
                                     />
                                 </Field>
+
+                                {/* Cascade — full width */}
+                                <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                                    <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2">
+                                        <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">
+                                            NEW
+                                        </span>
+                                        8. In-Memory Cascading (Region →
+                                        Provinces)
+                                    </p>
+                                    <div className="flex gap-6">
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Parent — Select Region
+                                            </label>
+                                            <CnxSelectBox
+                                                customDataSource={regions}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                placeholder="เลือกภาค..."
+                                                value={cbCascadeRegion}
+                                                onValueChanged={(e) => {
+                                                    setCbCascadeRegion(e.value);
+                                                    setCb8([]);
+                                                }}
+                                            />
+                                            <p className="text-xs text-blue-600">
+                                                Region:{" "}
+                                                <strong>
+                                                    {JSON.stringify(
+                                                        cbCascadeRegion,
+                                                    )}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div className="flex-2 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Child — Provinces (Cascade
+                                                CheckBox)
+                                            </label>
+                                            <CnxCheckBoxGroup
+                                                id="cb8"
+                                                customDataSource={provinces}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                cascadeRule={cascadeRule}
+                                                cascadeBy={cbCascadeRegion}
+                                                value={cb8}
+                                                onValueChanged={(e) =>
+                                                    setCb8(e.value)
+                                                }
+                                            />
+                                            <p className="text-xs text-pink-600">
+                                                Provinces:{" "}
+                                                <strong>
+                                                    {JSON.stringify(cb8)}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </Section>
 
                             {/* ── RadioGroup ────────────────────────────────────── */}
@@ -736,6 +949,71 @@ function App() {
                                         }
                                     />
                                 </Field>
+
+                                {/* Cascade — full width */}
+                                <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                                    <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2">
+                                        <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">
+                                            NEW
+                                        </span>
+                                        7. In-Memory Cascading (Region →
+                                        Province)
+                                    </p>
+                                    <div className="flex gap-6">
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Parent — Select Region
+                                            </label>
+                                            <CnxSelectBox
+                                                customDataSource={regions}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                placeholder="เลือกภาค..."
+                                                value={rgCascadeRegion}
+                                                onValueChanged={(e) => {
+                                                    setRgCascadeRegion(e.value);
+                                                    setRg7(null);
+                                                }}
+                                            />
+                                            <p className="text-xs text-blue-600">
+                                                Region:{" "}
+                                                <strong>
+                                                    {JSON.stringify(
+                                                        rgCascadeRegion,
+                                                    )}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div className="flex-1 flex flex-col gap-1">
+                                            <label className="text-xs font-bold text-slate-500">
+                                                Child — Province (Cascade Radio)
+                                            </label>
+                                            <CnxRadioGroup
+                                                id="rg7"
+                                                customDataSource={provinces}
+                                                valueExpr="value"
+                                                displayExpr="text"
+                                                layout="horizontal"
+                                                cascadeRule={cascadeRule}
+                                                cascadeBy={rgCascadeRegion}
+                                                value={rg7}
+                                                onValueChanged={(e) => {
+                                                    console.log(
+                                                        "e.value",
+                                                        e.value,
+                                                    );
+                                                    setRg7(e.value);
+                                                }}
+                                            />
+                                            <p className="text-xs text-pink-600">
+                                                Province:{" "}
+                                                <strong>
+                                                    {JSON.stringify(rg7)}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </Section>
                         </>
                     )}
