@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import {
     CnxCheckBoxGroup, CnxDataProvider, CnxDateBox, CnxNumberBox,
-    CnxRadioGroup, CnxSelectBox, CnxTagBox, CnxTextBox,
+    CnxRadioGroup, CnxSelectBox, CnxTagBox,
     type CheckBoxDataProvider, type CheckBoxViewModel,
     type RadioGroupDataProvider, type SelectBoxDataProvider, type TagBoxDataProvider,
-} from "@cnx-dev/react-mui";
+} from "@cnx-dev/react-devextreme";
 
 // ─── Static data & services (module-level — never re-created) ─────────────────
 
@@ -78,8 +78,8 @@ const noop = () => {};
 const Section = React.memo(function Section({ title, children }: { title: string; children: React.ReactNode }) {
     return (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-5 py-3 border-b border-slate-100 bg-purple-50">
-                <h2 className="text-sm font-semibold text-purple-600">{title}</h2>
+            <div className="px-5 py-3 border-b border-slate-100 bg-slate-50">
+                <h2 className="text-sm font-semibold text-blue-600">{title}</h2>
             </div>
             <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-5">{children}</div>
         </div>
@@ -108,34 +108,34 @@ const SelectBoxDemo = React.memo(function SelectBoxDemo() {
     const [sbRegion, setSbRegion] = useState<string | null>(null);
     const [sb8, setSb8] = useState<string | null>(null);
 
-    const handleSb1 = useCallback((e: any) => setSb1(e.value as string), []);
-    const handleSb2 = useCallback((e: any) => setSb2(e.value as string), []);
-    const handleSb3 = useCallback((e: any) => setSb3(e.value as string), []);
-    const handleSb5 = useCallback((e: any) => setSb5(e.value as string), []);
-    const handleSb6 = useCallback((e: any) => setSb6(e.value as string), []);
-    const handleSb7 = useCallback((e: any) => setSb7(e.value as string), []);
-    const handleSb8 = useCallback((e: any) => setSb8(e.value as string), []);
-    const handleSbRegion = useCallback((e: any) => { setSbRegion(e.value as string); setSb8(null); }, []);
+    const handleSb1 = useCallback((e: any) => setSb1(e.value), []);
+    const handleSb2 = useCallback((e: any) => setSb2(e.value), []);
+    const handleSb3 = useCallback((e: any) => setSb3(e.value), []);
+    const handleSb5 = useCallback((e: any) => setSb5(e.value), []);
+    const handleSb6 = useCallback((e: any) => setSb6(e.value), []);
+    const handleSb7 = useCallback((e: any) => setSb7(e.value), []);
+    const handleSb8 = useCallback((e: any) => setSb8(e.value), []);
+    const handleSbRegion = useCallback((e: any) => { setSbRegion(e.value); setSb8(null); }, []);
 
     return (
-        <Section title="Select Box (MUI)">
+        <Section title="Select Box">
             <Field label="1. Basic Usage" value={sb1}><CnxSelectBox customDataSource={fruits} placeholder="Select fruit..." value={sb1} onValueChanged={handleSb1} /></Field>
-            <Field label="2. Departments (Custom)" value={sb2}><CnxSelectBox customDataSource={departments} valueExpr="value" displayExpr="text" placeholder="Select dept..." value={sb2} onValueChanged={handleSb2} /></Field>
-            <Field label="3. Pre-selected ('banana')" value={sb3}><CnxSelectBox customDataSource={fruits} valueExpr="value" displayExpr="text" value={sb3} onValueChanged={handleSb3} /></Field>
-            <Field label="4. Disabled State" value={null}><CnxSelectBox customDataSource={fruits} valueExpr="value" displayExpr="text" disabled placeholder="Not allowed" onValueChanged={noop} /></Field>
-            <Field label="5. Search & Clear Enabled" value={sb5}><CnxSelectBox customDataSource={departments} valueExpr="value" displayExpr="text" showClearButton placeholder="Search..." value={sb5} onValueChanged={handleSb5} /></Field>
-            <Field label="6. Ignored Values (HR, Sales)" value={sb6}><CnxSelectBox customDataSource={departments} valueExpr="value" displayExpr="text" ignoreValue={ignoredDepartments} value={sb6} onValueChanged={handleSb6} /></Field>
-            <Field label="7. Select Box Key" value={sb7}><CnxSelectBox selectBoxKey="currency" valueExpr="value" displayExpr="text" value={sb7} onValueChanged={handleSb7} /></Field>
-            <div className="col-span-full border border-dashed border-purple-300 rounded-lg p-4 bg-purple-50/50">
-                <p className="text-xs font-semibold text-purple-500 mb-3 flex items-center gap-2"><span className="bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>8. In-Memory Cascading (Region → Province)</p>
+            <Field label="2. Departments (Custom)" value={sb2}><CnxSelectBox customDataSource={departments} valueExpr="value" displayExpr="text" placeholder="Select department..." value={sb2} onValueChanged={handleSb2} /></Field>
+            <Field label="3. Pre-selected Value" value={sb3}><CnxSelectBox customDataSource={fruits} value={sb3} onValueChanged={handleSb3} /></Field>
+            <Field label="4. Disabled" value={null}><CnxSelectBox customDataSource={fruits} disabled value={null} onValueChanged={noop} /></Field>
+            <Field label="5. Service-based (Banks)" value={sb5}><CnxSelectBox selectBoxKey="bank" placeholder="Select bank..." value={sb5} onValueChanged={handleSb5} /></Field>
+            <Field label="6. No Clear Button" value={sb6}><CnxSelectBox customDataSource={fruits} showClearButton={false} placeholder="No clear..." value={sb6} onValueChanged={handleSb6} /></Field>
+            <Field label="7. Ignore Values (HR, Sales)" value={sb7}><CnxSelectBox customDataSource={departments} valueExpr="value" displayExpr="text" ignoreValue={ignoredDepartments} placeholder="Filtered departments..." value={sb7} onValueChanged={handleSb7} /></Field>
+            <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2"><span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>8. In-Memory Cascading (Region → Province)</p>
                 <div className="flex gap-6">
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Parent — Select Region</label>
+                        <label className="text-xs font-bold text-slate-500">Parent — Select Region</label>
                         <CnxSelectBox customDataSource={regions} valueExpr="value" displayExpr="text" placeholder="เลือกภาค..." value={sbRegion} onValueChanged={handleSbRegion} />
-                        <p className="text-xs text-purple-600">Region: <strong>{JSON.stringify(sbRegion)}</strong></p>
+                        <p className="text-xs text-blue-600">Region: <strong>{JSON.stringify(sbRegion)}</strong></p>
                     </div>
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Child — Province (Cascade)</label>
+                        <label className="text-xs font-bold text-slate-500">Child — Province (Cascade)</label>
                         <CnxSelectBox customDataSource={provinces} valueExpr="value" displayExpr="text" cascadeRule={cascadeRule} cascadeBy={sbRegion} value={sb8} onValueChanged={handleSb8} />
                         <p className="text-xs text-pink-600">Province: <strong>{JSON.stringify(sb8)}</strong></p>
                     </div>
@@ -164,27 +164,27 @@ const TagBoxDemo = React.memo(function TagBoxDemo() {
     const handleTb6 = useCallback((e: any) => setTb6(e.value as string[]), []);
     const handleTb7 = useCallback((e: any) => setTb7(e.value as string[]), []);
     const handleTb8 = useCallback((e: any) => setTb8(e.value as string[]), []);
-    const handleTbRegion = useCallback((e: any) => { setTbRegion(e.value as string); setTb8([]); }, []);
+    const handleTbRegion = useCallback((e: any) => { setTbRegion(e.value); setTb8([]); }, []);
 
     return (
-        <Section title="Tag Box (Multi-select) (MUI)">
-            <Field label="1. Basic Usage" value={tb1}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" placeholder="Select fruits..." value={tb1} onValueChanged={handleTb1} /></Field>
-            <Field label="2. Departments" value={tb2}><CnxTagBox customDataSource={departments} valueExpr="value" displayExpr="text" placeholder="Select depts..." value={tb2} onValueChanged={handleTb2} /></Field>
-            <Field label="3. Pre-selected ('apple', 'mango')" value={tb3}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" value={tb3} onValueChanged={handleTb3} /></Field>
-            <Field label="4. Disabled State" value={[]}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" disabled placeholder="Not allowed" value={[]} onValueChanged={noop} /></Field>
-            <Field label="5. Max Displayed (2)" value={tb5}><CnxTagBox customDataSource={departments} valueExpr="value" displayExpr="text" maxDispayTag={2} placeholder="Max 2 visibly shown" value={tb5} onValueChanged={handleTb5} /></Field>
-            <Field label="6. Ignored Values" value={tb6}><CnxTagBox customDataSource={departments} valueExpr="value" displayExpr="text" value={tb6} onValueChanged={handleTb6} /></Field>
-            <Field label="7. Tag Box Key" value={tb7}><CnxTagBox tagBoxKey="fruits" valueExpr="value" displayExpr="text" value={tb7} onValueChanged={handleTb7} /></Field>
-            <div className="col-span-full border border-dashed border-purple-300 rounded-lg p-4 bg-purple-50/50">
-                <p className="text-xs font-semibold text-purple-500 mb-3 flex items-center gap-2"><span className="bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>8. In-Memory Cascading (Region → Provinces)</p>
+        <Section title="Tag Box">
+            <Field label="1. Basic Fruits" value={tb1}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" placeholder="เลือกผลไม้..." value={tb1} onValueChanged={handleTb1} /></Field>
+            <Field label="2. Departments" value={tb2}><CnxTagBox customDataSource={departments} valueExpr="value" displayExpr="text" placeholder="เลือกแผนก..." value={tb2} onValueChanged={handleTb2} /></Field>
+            <Field label="3. Pre-selected" value={tb3}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" value={tb3} onValueChanged={handleTb3} /></Field>
+            <Field label="4. Disabled" value={[]}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" disabled value={[]} onValueChanged={noop} /></Field>
+            <Field label="5. Service-based (Roles)" value={tb5}><CnxTagBox tagBoxKey="role" placeholder="เลือก role..." value={tb5} onValueChanged={handleTb5} /></Field>
+            <Field label="6. No Clear Button" value={tb6}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" showClearButton={false} value={tb6} onValueChanged={handleTb6} /></Field>
+            <Field label="7. Max 2 Tags Shown" value={tb7}><CnxTagBox customDataSource={fruits} valueExpr="value" displayExpr="text" maxDisplayedTags={2} value={tb7} onValueChanged={handleTb7} /></Field>
+            <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2"><span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>8. In-Memory Cascading (Region → Provinces)</p>
                 <div className="flex gap-6">
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Parent — Select Region</label>
+                        <label className="text-xs font-bold text-slate-500">Parent — Select Region</label>
                         <CnxSelectBox customDataSource={regions} valueExpr="value" displayExpr="text" placeholder="เลือกภาค..." value={tbRegion} onValueChanged={handleTbRegion} />
-                        <p className="text-xs text-purple-600">Region: <strong>{JSON.stringify(tbRegion)}</strong></p>
+                        <p className="text-xs text-blue-600">Region: <strong>{JSON.stringify(tbRegion)}</strong></p>
                     </div>
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Child — Provinces (Cascade)</label>
+                        <label className="text-xs font-bold text-slate-500">Child — Provinces (Cascade)</label>
                         <CnxTagBox customDataSource={provinces} valueExpr="value" displayExpr="text" cascadeRule={cascadeRule} cascadeBy={tbRegion} value={tb8} onValueChanged={handleTb8} />
                         <p className="text-xs text-pink-600">Provinces: <strong>{JSON.stringify(tb8)}</strong></p>
                     </div>
@@ -210,35 +210,13 @@ const DateBoxDemo = React.memo(function DateBoxDemo() {
     const handleDb6 = useCallback((e: any) => setDb6(e.value as string), []);
 
     return (
-        <Section title="Date Box (MUI)">
+        <Section title="Date Box">
             <Field label="1. Basic Date" value={db1}><CnxDateBox placeholder="Select date..." value={db1} onValueChanged={handleDb1} /></Field>
             <Field label="2. Date and Time" value={db2}><CnxDateBox placeholder="Select datetime..." value={db2} onValueChanged={handleDb2} /></Field>
             <Field label="3. Pre-filled Date" value={db3}><CnxDateBox value={db3} onValueChanged={handleDb3} /></Field>
             <Field label="4. Disabled State" value={null}><CnxDateBox disabled placeholder="Not allowed" value={null} onValueChanged={noop} /></Field>
             <Field label="5. Empty Not Allowed" value={db5}><CnxDateBox allowEmpty={false} value={db5} onValueChanged={handleDb5} /></Field>
-            <Field label="6. Custom Format (MM/yyyy)" value={db6}><CnxDateBox placeholder="Month/Year" value={db6} onValueChanged={handleDb6} /></Field>
-        </Section>
-    );
-});
-
-// ─── TextBoxDemo ──────────────────────────────────────────────────────────────
-
-const TextBoxDemo = React.memo(function TextBoxDemo() {
-    const [txt1, setTxt1] = useState<string | null>(null);
-    const [txt2, setTxt2] = useState<string | null>(null);
-    const [txt3, setTxt3] = useState<string>("Hello MUI!");
-
-    const handleTxt1 = useCallback((e: any) => setTxt1(e.value as string), []);
-    const handleTxt2 = useCallback((e: any) => setTxt2(e.value as string), []);
-    const handleTxt3 = useCallback((e: any) => setTxt3(e.value as string), []);
-
-    return (
-        <Section title="Text Box (MUI)">
-            <Field label="1. Basic Text" value={txt1}><CnxTextBox placeholder="Type something..." value={txt1 ?? undefined} onValueChanged={handleTxt1} /></Field>
-            <Field label="2. Max Length (10)" value={txt2}><CnxTextBox placeholder="Max 10 chars..." maxLength={10} value={txt2 ?? undefined} onValueChanged={handleTxt2} /></Field>
-            <Field label="3. Pre-filled" value={txt3}><CnxTextBox value={txt3} onValueChanged={handleTxt3} /></Field>
-            <Field label="4. Disabled State" value={null}><CnxTextBox disabled placeholder="Not allowed" value={undefined} onValueChanged={noop} /></Field>
-            <Field label="5. Disabled Clear Button" value={txt1}><CnxTextBox showClearButton={false} value={txt1 ?? undefined} onValueChanged={handleTxt1} /></Field>
+            <Field label="6. Custom Format (MM/yyyy)" value={db6}><CnxDateBox format="MM/yyyy" placeholder="Month/Year" value={db6} onValueChanged={handleDb6} /></Field>
         </Section>
     );
 });
@@ -259,12 +237,12 @@ const NumberBoxDemo = React.memo(function NumberBoxDemo() {
     const handleNb6 = useCallback((e: any) => setNb6(e.value as number), []);
 
     return (
-        <Section title="Number Box (MUI)">
+        <Section title="Number Box">
             <Field label="1. Basic Use" value={nb1}><CnxNumberBox value={nb1} onValueChanged={handleNb1} /></Field>
-            <Field label="2. Price Format" value={nb2}><CnxNumberBox format="#,##0.00" value={nb2} onValueChanged={handleNb2} /></Field>
+            <Field label="2. Price Format" value={nb2}><CnxNumberBox format="$ #,##0.00" value={nb2} onValueChanged={handleNb2} /></Field>
             <Field label="3. Range Limits (0-100)" value={nb3}><CnxNumberBox min={0} max={100} value={nb3} onValueChanged={handleNb3} /></Field>
             <Field label="4. Disabled State" value={null}><CnxNumberBox disabled value={null} onValueChanged={noop} /></Field>
-            <Field label="5. Disable Arrows (Integer)" value={nb5}><CnxNumberBox allowArrowKey={false} value={nb5} onValueChanged={handleNb5} /></Field>
+            <Field label="5. Disable Arrows (Integer)" value={nb5}><CnxNumberBox disableArrow value={nb5} onValueChanged={handleNb5} /></Field>
             <Field label="6. Required (allowEmpty false)" value={nb6}><CnxNumberBox allowEmpty={false} value={nb6} onValueChanged={handleNb6} /></Field>
         </Section>
     );
@@ -282,35 +260,35 @@ const CheckBoxGroupDemo = React.memo(function CheckBoxGroupDemo() {
     const [cbRegion, setCbRegion] = useState<string | null>(null);
     const [cb8, setCb8] = useState<string[]>([]);
 
-    const handleCb1 = useCallback((e: any) => setCb1(e.value as string[]), []);
-    const handleCb2 = useCallback((e: any) => setCb2(e.value as string[]), []);
-    const handleCb4 = useCallback((e: any) => setCb4(e.value as string[]), []);
-    const handleCb5 = useCallback((e: any) => setCb5(e.value as string[]), []);
-    const handleCb6 = useCallback((e: any) => setCb6(e.value as string[]), []);
-    const handleCb7 = useCallback((e: any) => setCb7(e.value as string[]), []);
-    const handleCb8 = useCallback((e: any) => setCb8(e.value as string[]), []);
-    const handleCbRegion = useCallback((e: any) => { setCbRegion(e.value as string); setCb8([]); }, []);
+    const handleCb1 = useCallback((e: any) => setCb1(e.value), []);
+    const handleCb2 = useCallback((e: any) => setCb2(e.value), []);
+    const handleCb4 = useCallback((e: any) => setCb4(e.value), []);
+    const handleCb5 = useCallback((e: any) => setCb5(e.value), []);
+    const handleCb6 = useCallback((e: any) => setCb6(e.value), []);
+    const handleCb7 = useCallback((e: any) => setCb7(e.value), []);
+    const handleCb8 = useCallback((e: any) => setCb8(e.value), []);
+    const handleCbRegion = useCallback((e: any) => { setCbRegion(e.value); setCb8([]); }, []);
 
     return (
-        <Section title="CheckBox Group (MUI)">
-            <Field label="1. Horizontal Fruits" value={cb1}><CnxCheckBoxGroup id="mcb1" customDataSource={fruits} valueExpr="value" displayExpr="text" layout="horizontal" value={cb1} onValueChanged={handleCb1} /></Field>
-            <Field label="2. Default Value" value={cb2}><CnxCheckBoxGroup id="mcb2" customDataSource={departments} valueExpr="value" displayExpr="text" layout="horizontal" value={cb2} onValueChanged={handleCb2} /></Field>
-            <Field label="3. Disabled Options" value={[]}><CnxCheckBoxGroup id="mcb3" customDataSource={fruits} valueExpr="value" displayExpr="text" disabled value={[]} onValueChanged={noop} /></Field>
-            <Field label="4. Search Enabled & Max Length (3)" value={cb4}><CnxCheckBoxGroup id="mcb4" customDataSource={departments} valueExpr="value" displayExpr="text" value={cb4} onValueChanged={handleCb4} /></Field>
-            <Field label="5. Ignored Values (HR, Sales)" value={cb5}><CnxCheckBoxGroup id="mcb5" customDataSource={departments} valueExpr="value" displayExpr="text" ignoreValue={ignoredDepartments} value={cb5} onValueChanged={handleCb5} /></Field>
-            <Field label="6. Single Select" value={cb6}><CnxCheckBoxGroup id="mcb6" customDataSource={departments} valueExpr="value" displayExpr="text" mode="single" value={cb6} onValueChanged={handleCb6} /></Field>
-            <Field label="7. Vertical Departments" value={cb7}><CnxCheckBoxGroup id="mcb7" customDataSource={departments} valueExpr="value" displayExpr="text" layout="vertical" value={cb7} onValueChanged={handleCb7} /></Field>
-            <div className="col-span-full border border-dashed border-purple-300 rounded-lg p-4 bg-purple-50/50">
-                <p className="text-xs font-semibold text-purple-500 mb-3 flex items-center gap-2"><span className="bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>8. In-Memory Cascading (Region → Provinces)</p>
+        <Section title="CheckBox Group">
+            <Field label="1. Horizontal Fruits" value={cb1}><CnxCheckBoxGroup id="cb1" customDataSource={fruits} valueExpr="value" displayExpr="text" layout="horizontal" value={cb1} onValueChanged={handleCb1} /></Field>
+            <Field label="2. Default Value" value={cb2}><CnxCheckBoxGroup id="cb2" customDataSource={departments} valueExpr="value" displayExpr="text" layout="horizontal" value={cb2} onValueChanged={handleCb2} /></Field>
+            <Field label="3. Disabled Options" value={[]}><CnxCheckBoxGroup id="cb3" customDataSource={fruits} valueExpr="value" displayExpr="text" disabled value={[]} onValueChanged={noop} /></Field>
+            <Field label="4. Search Enabled & Max Length (3)" value={cb4}><CnxCheckBoxGroup id="cb4" customDataSource={departments} valueExpr="value" displayExpr="text" value={cb4} onValueChanged={handleCb4} /></Field>
+            <Field label="5. Ignored Values (HR, Sales)" value={cb5}><CnxCheckBoxGroup id="cb5" customDataSource={departments} valueExpr="value" displayExpr="text" ignoreValue={ignoredDepartments} value={cb5} onValueChanged={handleCb5} /></Field>
+            <Field label="6. Single Select" value={cb6}><CnxCheckBoxGroup id="cb6" customDataSource={departments} valueExpr="value" displayExpr="text" mode="single" value={cb6} onValueChanged={handleCb6} /></Field>
+            <Field label="7. Vertical Departments" value={cb7}><CnxCheckBoxGroup id="cb7" customDataSource={departments} valueExpr="value" displayExpr="text" layout="vertical" value={cb7} onValueChanged={handleCb7} /></Field>
+            <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2"><span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>8. In-Memory Cascading (Region → Provinces)</p>
                 <div className="flex gap-6">
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Parent — Select Region</label>
+                        <label className="text-xs font-bold text-slate-500">Parent — Select Region</label>
                         <CnxSelectBox customDataSource={regions} valueExpr="value" displayExpr="text" placeholder="เลือกภาค..." value={cbRegion} onValueChanged={handleCbRegion} />
-                        <p className="text-xs text-purple-600">Region: <strong>{JSON.stringify(cbRegion)}</strong></p>
+                        <p className="text-xs text-blue-600">Region: <strong>{JSON.stringify(cbRegion)}</strong></p>
                     </div>
                     <div className="flex-2 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Child — Provinces (Cascade CheckBox)</label>
-                        <CnxCheckBoxGroup id="mcb8" customDataSource={provinces} valueExpr="value" displayExpr="text" cascadeBy={cbRegion} value={cb8} onValueChanged={handleCb8} />
+                        <label className="text-xs font-bold text-slate-500">Child — Provinces (Cascade CheckBox)</label>
+                        <CnxCheckBoxGroup id="cb8" customDataSource={provinces} valueExpr="value" displayExpr="text" cascadeRule={cascadeRule} cascadeBy={cbRegion} value={cb8} onValueChanged={handleCb8} />
                         <p className="text-xs text-pink-600">Provinces: <strong>{JSON.stringify(cb8)}</strong></p>
                     </div>
                 </div>
@@ -337,28 +315,28 @@ const RadioGroupDemo = React.memo(function RadioGroupDemo() {
     const handleRg4 = useCallback((e: any) => setRg4(e.value as string), []);
     const handleRg5 = useCallback((e: any) => setRg5(e.value as string), []);
     const handleRg6 = useCallback((e: any) => setRg6(e.value as string), []);
-    const handleRg7 = useCallback((e: any) => setRg7(e.value as string), []);
-    const handleRgRegion = useCallback((e: any) => { setRgRegion(e.value as string); setRg7(null); }, []);
+    const handleRg7 = useCallback((e: any) => setRg7(e.value), []);
+    const handleRgRegion = useCallback((e: any) => { setRgRegion(e.value); setRg7(null); }, []);
 
     return (
-        <Section title="Radio Group (MUI)">
-            <Field label="1. Horizontal Fruits" value={rg1}><CnxRadioGroup id="mrg1" customDataSource={fruits} valueExpr="value" displayExpr="text" layout="horizontal" value={rg1} onValueChanged={handleRg1} /></Field>
-            <Field label="2. Vertical Departments" value={rg2}><CnxRadioGroup id="mrg2" customDataSource={departments} valueExpr="value" displayExpr="text" layout="vertical" value={rg2} onValueChanged={handleRg2} /></Field>
-            <Field label="3. Default Value" value={rg3}><CnxRadioGroup id="mrg3" customDataSource={departments} valueExpr="value" displayExpr="text" value={rg3} onValueChanged={handleRg3} /></Field>
-            <Field label="4. Disabled Options" value={rg4}><CnxRadioGroup id="mrg4" customDataSource={fruits} valueExpr="value" displayExpr="text" value={rg4} disabled onValueChanged={handleRg4} /></Field>
-            <Field label="5. Optional / No Default" value={rg5}><CnxRadioGroup id="mrg5" customDataSource={departments} valueExpr="value" displayExpr="text" autoDefault={false} value={rg5} onValueChanged={handleRg5} /></Field>
-            <Field label="6. Ignored Values (HR, Sales)" value={rg6}><CnxRadioGroup id="mrg6" customDataSource={departments} valueExpr="value" displayExpr="text" ignoreValue={ignoredDepartments} value={rg6} onValueChanged={handleRg6} /></Field>
-            <div className="col-span-full border border-dashed border-purple-300 rounded-lg p-4 bg-purple-50/50">
-                <p className="text-xs font-semibold text-purple-500 mb-3 flex items-center gap-2"><span className="bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>7. In-Memory Cascading (Region → Province)</p>
+        <Section title="Radio Group">
+            <Field label="1. Horizontal Fruits" value={rg1}><CnxRadioGroup id="rg1" customDataSource={fruits} valueExpr="value" displayExpr="text" layout="horizontal" value={rg1} onValueChanged={handleRg1} /></Field>
+            <Field label="2. Vertical Departments" value={rg2}><CnxRadioGroup id="rg2" customDataSource={departments} valueExpr="value" displayExpr="text" layout="vertical" value={rg2} onValueChanged={handleRg2} /></Field>
+            <Field label="3. Default Value" value={rg3}><CnxRadioGroup id="rg3" customDataSource={departments} valueExpr="value" displayExpr="text" value={rg3} onValueChanged={handleRg3} /></Field>
+            <Field label="4. Disabled Options" value={rg4}><CnxRadioGroup id="rg4" customDataSource={fruits} valueExpr="value" displayExpr="text" value={rg4} disabled onValueChanged={handleRg4} /></Field>
+            <Field label="5. Optional / No Default" value={rg5}><CnxRadioGroup id="rg5" customDataSource={departments} valueExpr="value" displayExpr="text" autoDefault={false} value={rg5} onValueChanged={handleRg5} /></Field>
+            <Field label="6. Ignored Values (HR, Sales)" value={rg6}><CnxRadioGroup id="rg6" customDataSource={departments} valueExpr="value" displayExpr="text" ignoreValue={ignoredDepartments} value={rg6} onValueChanged={handleRg6} /></Field>
+            <div className="col-span-full border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50">
+                <p className="text-xs font-semibold text-slate-500 mb-3 flex items-center gap-2"><span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full">NEW</span>7. In-Memory Cascading (Region → Province)</p>
                 <div className="flex gap-6">
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Parent — Select Region</label>
+                        <label className="text-xs font-bold text-slate-500">Parent — Select Region</label>
                         <CnxSelectBox customDataSource={regions} valueExpr="value" displayExpr="text" placeholder="เลือกภาค..." value={rgRegion} onValueChanged={handleRgRegion} />
-                        <p className="text-xs text-purple-600">Region: <strong>{JSON.stringify(rgRegion)}</strong></p>
+                        <p className="text-xs text-blue-600">Region: <strong>{JSON.stringify(rgRegion)}</strong></p>
                     </div>
                     <div className="flex-1 flex flex-col gap-1">
-                        <label className="text-xs font-bold text-purple-500">Child — Province (Cascade Radio)</label>
-                        <CnxRadioGroup id="mrg7" customDataSource={provinces} valueExpr="value" displayExpr="text" layout="horizontal" cascadeBy={rgRegion} value={rg7} onValueChanged={handleRg7} />
+                        <label className="text-xs font-bold text-slate-500">Child — Province (Cascade Radio)</label>
+                        <CnxRadioGroup id="rg7" customDataSource={provinces} valueExpr="value" displayExpr="text" layout="horizontal" cascadeRule={cascadeRule} cascadeBy={rgRegion} value={rg7} onValueChanged={handleRg7} />
                         <p className="text-xs text-pink-600">Province: <strong>{JSON.stringify(rg7)}</strong></p>
                     </div>
                 </div>
@@ -369,7 +347,7 @@ const RadioGroupDemo = React.memo(function RadioGroupDemo() {
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
 
-function MuiDemo() {
+export default function DxDemo() {
     const providerValue = useMemo(() => ({
         selectBox: mockSelectBoxService,
         tagBox: mockTagBoxService,
@@ -381,13 +359,12 @@ function MuiDemo() {
         <CnxDataProvider {...providerValue}>
             <div className="max-w-4xl mx-auto px-4 py-10 flex flex-col gap-6">
                 <div className="border-b border-slate-200 pb-4">
-                    <p className="text-xs font-semibold text-purple-500 uppercase tracking-widest mb-1">MUI</p>
+                    <p className="text-xs font-semibold text-blue-500 uppercase tracking-widest mb-1">DevExtreme</p>
                     <h1 className="text-xl font-bold text-slate-800">Component Demos</h1>
                 </div>
                 <SelectBoxDemo />
                 <TagBoxDemo />
                 <DateBoxDemo />
-                <TextBoxDemo />
                 <NumberBoxDemo />
                 <CheckBoxGroupDemo />
                 <RadioGroupDemo />
@@ -395,5 +372,3 @@ function MuiDemo() {
         </CnxDataProvider>
     );
 }
-
-export default MuiDemo;
